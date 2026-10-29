@@ -119,8 +119,6 @@ Gemini CLI 可以复制 `AGENTS.md` 并重命名为 `GEMINI.md`。
 | codexmcp | https://github.com/123aliez/codexmcp | MCP 服务，让 Claude Code 调用本机的 Codex CLI；支持并行调用、超时，返回改动文件和执行命令等证据 |
 | codex-delegate | https://github.com/123aliez/codex-delegate | Claude Code skill，提供任务书模板和审查流程；第 7 节是本框架用到的运维场景 |
 
-安装前先装好 Codex CLI 并登录：`npm i -g @openai/codex && codex login`。
-
 ```bash
 # 注册 codexmcp（user 级，名称必须是 codex）。需要代理时加 -e HTTPS_PROXY=... -e HTTP_PROXY=...
 claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.com/123aliez/codexmcp.git codexmcp
@@ -311,8 +309,6 @@ The Codex collaboration in this framework relies on two repositories, installed 
 |------|------------|---------|
 | codexmcp | https://github.com/123aliez/codexmcp | MCP server that lets Claude Code call the local Codex CLI; supports parallel calls and timeouts, and returns evidence such as changed files and executed commands |
 | codex-delegate | https://github.com/123aliez/codex-delegate | Claude Code skill with task-spec templates and review procedures; section 7 covers the ops scenario this framework uses |
-
-Install and log in to Codex CLI first: `npm i -g @openai/codex && codex login`.
 
 ```bash
 # Register codexmcp (user scope; the name must be codex). Add -e HTTPS_PROXY=... -e HTTP_PROXY=... if you need a proxy
