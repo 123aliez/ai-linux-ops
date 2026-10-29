@@ -110,6 +110,28 @@ Gemini CLI 可以复制 `AGENTS.md` 并重命名为 `GEMINI.md`。
 - 常用命令速查
 - 运维变更记录
 
+## 配套工具
+
+本框架的 Codex 协作依赖下面两个仓库，要装在运行 Claude Code 的服务器上：
+
+| 工具 | 仓库 | 作用 |
+|------|------|------|
+| codexmcp | https://github.com/123aliez/codexmcp | MCP 服务，让 Claude Code 调用本机的 Codex CLI；支持并行调用、超时，返回改动文件和执行命令等证据 |
+| codex-delegate | https://github.com/123aliez/codex-delegate | Claude Code skill，提供任务书模板和审查流程；第 7 节是本框架用到的运维场景 |
+
+安装前先装好 Codex CLI 并登录：`npm i -g @openai/codex && codex login`。
+
+```bash
+# 注册 codexmcp（user 级，名称必须是 codex）。需要代理时加 -e HTTPS_PROXY=... -e HTTP_PROXY=...
+claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.com/123aliez/codexmcp.git codexmcp
+
+# 安装 skill（私有仓库，需要有访问权限的账号）
+git clone https://github.com/123aliez/codex-delegate.git ~/.claude/skills/codex-delegate
+
+# 以后更新 skill
+git -C ~/.claude/skills/codex-delegate pull
+```
+
 ## 快速开始
 
 ### 1. 克隆仓库
@@ -145,7 +167,7 @@ cp _template/SERVICE.md services/01_your-service.com.md
 
 ### 5. 启动使用
 
-在服务器上安装 Codex CLI、[codexmcp](https://github.com/123aliez/codexmcp) 和 [codex-delegate](https://github.com/123aliez/codex-delegate) skill，然后用 Claude Code 打开项目目录，AI 会自动加载所有上下文：
+按上面的"配套工具"装好 codexmcp 和 codex-delegate 后，用 Claude Code 打开项目目录，AI 会自动加载所有上下文：
 
 ```bash
 claude
@@ -281,6 +303,28 @@ One document per service, based on `_template/SERVICE.md` template, including:
 - Common command quick reference
 - Operational change log
 
+## Companion Tools
+
+The Codex collaboration in this framework relies on two repositories, installed on the server that runs Claude Code:
+
+| Tool | Repository | Purpose |
+|------|------------|---------|
+| codexmcp | https://github.com/123aliez/codexmcp | MCP server that lets Claude Code call the local Codex CLI; supports parallel calls and timeouts, and returns evidence such as changed files and executed commands |
+| codex-delegate | https://github.com/123aliez/codex-delegate | Claude Code skill with task-spec templates and review procedures; section 7 covers the ops scenario this framework uses |
+
+Install and log in to Codex CLI first: `npm i -g @openai/codex && codex login`.
+
+```bash
+# Register codexmcp (user scope; the name must be codex). Add -e HTTPS_PROXY=... -e HTTP_PROXY=... if you need a proxy
+claude mcp add codex -s user --transport stdio -- uvx --from git+https://github.com/123aliez/codexmcp.git codexmcp
+
+# Install the skill (private repository; needs an account with access)
+git clone https://github.com/123aliez/codex-delegate.git ~/.claude/skills/codex-delegate
+
+# Update the skill later
+git -C ~/.claude/skills/codex-delegate pull
+```
+
 ## Quick Start
 
 ### 1. Clone the Repository
@@ -316,7 +360,7 @@ cp _template/SERVICE.md services/01_your-service.com.md
 
 ### 5. Start Using
 
-Install Codex CLI, [codexmcp](https://github.com/123aliez/codexmcp) and the [codex-delegate](https://github.com/123aliez/codex-delegate) skill on the server, then open the project directory with Claude Code — AI will auto-load all context:
+After installing codexmcp and codex-delegate as described in Companion Tools, open the project directory with Claude Code — AI will auto-load all context:
 
 ```bash
 claude
