@@ -137,7 +137,7 @@ git -C ~/.claude/skills/codex-delegate pull
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-linux-ops.git
+git clone https://github.com/123aliez/ai-linux-ops.git
 cd ai-linux-ops
 ```
 
@@ -173,16 +173,16 @@ cp _template/SERVICE.md services/01_your-service.com.md
 claude
 ```
 
-## 与 [ai-project-manager](https://github.com/YOUR_USERNAME/ai-project-manager) 的关系
+## 与 [AI Project Demolition](https://github.com/123aliez/AI_Project_Demolition) 的关系
 
-本框架是 **运维版**，`ai-project-manager` 是 **开发版**，两者平行独立：
+本框架是 **运维版**，`AI Project Demolition` 是 **开发版**，两者平行独立：
 
-| | ai-project-manager（开发版） | ai-linux-ops（运维版） |
+| | AI Project Demolition（开发版） | ai-linux-ops（运维版） |
 |---|---|---|
 | 管理对象 | 开发项目 | 部署服务 |
 | 索引文件 | PROJECTS_INDEX.md | SERVICES_INDEX.md |
 | 文档模板 | PROJECT.md | SERVICE.md |
-| 核心偏好 | 开发（subagent 并行开发） | 运维（高危命令确认） |
+| Codex 的角色 | 执行者（写代码、跑测试），另开会话做独立审查 | 只读助手（信息收集、方案审查、完成审查） |
 | 典型场景 | 写代码、修 Bug、重构 | 部署服务、排障、配置变更 |
 
 两者通过文档中的"关联项目/关联服务"字段建立引用关系，但不跨框架操作。
@@ -330,7 +330,7 @@ git -C ~/.claude/skills/codex-delegate pull
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-linux-ops.git
+git clone https://github.com/123aliez/ai-linux-ops.git
 cd ai-linux-ops
 ```
 
@@ -366,16 +366,16 @@ After installing codexmcp and codex-delegate as described in Companion Tools, op
 claude
 ```
 
-## Relationship with [ai-project-manager](https://github.com/YOUR_USERNAME/ai-project-manager)
+## Relationship with [AI Project Demolition](https://github.com/123aliez/AI_Project_Demolition)
 
-This framework is the **ops edition**, while `ai-project-manager` is the **dev edition**. They run in parallel, independently:
+This framework is the **ops edition**, while `AI Project Demolition` is the **dev edition**. They run in parallel, independently:
 
-| | ai-project-manager (Dev) | ai-linux-ops (Ops) |
+| | AI Project Demolition (Dev) | ai-linux-ops (Ops) |
 |---|---|---|
 | Managed objects | Development projects | Deployed services |
 | Index file | PROJECTS_INDEX.md | SERVICES_INDEX.md |
 | Doc template | PROJECT.md | SERVICE.md |
-| Core preference | Development (parallel subagent coding) | Operations (dangerous command review) |
+| Codex's role | Executor (writes code, runs tests), with a separate review session | Read-only assistant (information gathering, plan review, result review) |
 | Typical use cases | Writing code, fixing bugs, refactoring | Deploying services, troubleshooting, config changes |
 
 They reference each other through "related project/service" fields in documents but never cross-operate.
