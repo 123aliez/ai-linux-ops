@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__codex__codex"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(sudo rm *)",
+      "Bash(systemctl restart *)",
+      "Bash(systemctl stop *)",
+      "Bash(systemctl disable *)",
+      "Bash(systemctl mask *)",
+      "Bash(sudo systemctl restart *)",
+      "Bash(sudo systemctl stop *)",
+      "Bash(sudo systemctl disable *)",
+      "Bash(sudo systemctl mask *)",
+      "Bash(docker compose down*)",
+      "Bash(sudo docker compose down*)",
+      "Bash(docker rm *)",
+      "Bash(docker volume rm *)",
+      "Bash(docker system prune*)",
+      "Bash(sudo docker rm *)",
+      "Bash(sudo docker volume rm *)",
+      "Bash(sudo docker system prune*)",
+      "Bash(psql *)",
+      "Bash(mysql *)",
+      "Bash(redis-cli *)",
+      "Bash(docker exec * psql*)",
+      "Bash(docker exec * redis-cli*)",
+      "Bash(sudo -u postgres *)",
+      "Bash(reboot*)",
+      "Bash(sudo reboot*)",
+      "Bash(shutdown*)",
+      "Bash(sudo shutdown*)"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+# 本仓库只存放通用框架。真实的服务器信息、服务文档和知识文档只保存在本机，永远不入库。
+#
+# 根目录下的 .md 默认全部忽略（包括 DESC_ENV.md、SERVICES_INDEX.md 和各类知识文档），
+# 只放行框架文件：
+/*.md
+!/README.md
+!/CLAUDE.md
+!/AGENTS.md
+!/RULES_GLOBAL.md
+!/DESC_DIR.md
+
+# 服务文档与归档
+/services/
+/archive/
+
+# 本机专属配置
+.claude/settings.local.json
