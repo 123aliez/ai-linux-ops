@@ -61,12 +61,12 @@ Gemini CLI 可以复制 `AGENTS.md` 并重命名为 `GEMINI.md`。
 | # | 规则 | 说明 |
 |---|------|------|
 | 1 | 语言设定 | 按用户偏好语言回答 |
-| 2 | 行动前置确认 | 涉及文件/服务器操作必须先确认 |
+| 2 | 行动前置确认 | 简单可回滚的改动直接执行；复杂、不可逆的先确认计划 |
 | 3 | 上下文解析优先 | 优先读取用户提供的文档，不用预训练数据 |
 | 4 | 状态确认握手 | 每次新会话用一句话确认已加载框架 |
-| 5 | 状态存储唯一性 | 只写入本框架的文件，不写工具专属配置 |
-| 6 | 运维偏好 | Codex 只读信息收集与独立审查、高危命令确认（ask 规则强制）、变更后同步 |
-| 7 | 网络代理降级 | 网络失败时自动通过代理重试 |
+| 5 | 状态存储唯一性 | 状态只写入本框架的文件 |
+| 6 | 运维偏好 | Codex 只读信息收集与独立审查（简单改动可跳过）、高危命令确认（ask 规则强制）、变更后同步 |
+| 7 | 联网检索 | 时效性信息和外部事实优先用 mcp-grok 检索，并与本机状态交叉验证 |
 
 ### 服务器环境：`DESC_ENV.md`
 
@@ -252,12 +252,12 @@ Defines 7 behavioral rules for AI assistants:
 | # | Rule | Description |
 |---|------|-------------|
 | 1 | Language | Respond in user's preferred language |
-| 2 | Confirm Before Action | File/server operations require prior confirmation |
+| 2 | Confirm Before Action | Simple, reversible changes go ahead directly; complex or irreversible ones need plan approval first |
 | 3 | Context Priority | Parse user-provided documents first, don't use training data |
 | 4 | Handshake Protocol | One-sentence confirmation that the framework is loaded |
-| 5 | Single Source of Truth | Only write to framework files, never to tool-specific configs |
-| 6 | Ops Preferences | Read-only Codex info gathering and independent review, dangerous command review (enforced by ask rules), post-change sync |
-| 7 | Network Proxy Fallback | Auto-retry through proxy on network failures |
+| 5 | Single Source of Truth | State goes only into framework files |
+| 6 | Ops Preferences | Read-only Codex info gathering and independent review (skippable for simple changes), dangerous command review (enforced by ask rules), post-change sync |
+| 7 | Web Search | Use mcp-grok first for time-sensitive or external facts, cross-checked against the server's actual state |
 
 ### Server Environment: `DESC_ENV.md`
 
