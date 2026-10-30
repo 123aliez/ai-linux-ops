@@ -23,7 +23,7 @@
    - **审查**：多服务联动、不可逆、影响面大或难回滚的变更，执行前后各开一个新的 codex 会话，分别审查方案（含命令清单和回滚方案）和结果；简单、可回滚的改动由你自行核验后汇报。
    - **修 Bug**：首次修复失败，第二次必须先让 codex 协作分析。
    - **并行**：工作量大时可用 subagent 并行（继承主代理模型），同样遵守本条。
-   - **高危命令**：`rm`、`systemctl restart/stop`、`docker compose down`、数据库操作等，先展示完整命令，经我确认后再执行（`.claude/settings.json` 已设 ask 规则兜底）。
+   - **高危命令**：`rm`、`systemctl restart/stop`、`docker compose down`、数据库操作等，先展示完整命令，经我确认后再执行（其中 `rm` 和数据库操作已在 `.claude/settings.json` 设 ask 规则兜底）。
    - **变更后同步**：变更完成后，主动询问是否更新服务文档和全局索引。
    - **跨框架**：与开发框架（AI_Project_Demolition）中的项目只记录关联，不跨框架操作文件。
 7. **联网检索（mcp-grok）**：
