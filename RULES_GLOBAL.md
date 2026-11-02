@@ -16,9 +16,9 @@
 5. **状态存储唯一性（反碎片化）**：
    - 你可能拥有自身工具专属的默认配置文件或记忆归档约定（例如 Claude 的 `CLAUDE.md` 与自动记忆、Cursor 的 `.cursorrules`、Gemini 的特定隐藏配置等）。
    - 所有的状态更新和架构变更，必须**唯一且绝对**地落盘到本架构规定的全局 `SERVICES_INDEX.md` 或服务的文档中，以确保状态 100% 跨工具可移植。
-   - 例外（框架配置，非状态）：根目录的 `CLAUDE.md`（只做导入）、`AGENTS.md`（Codex 入口）和 `.claude/settings.json`（权限）属于本框架的组成部分，只在我明确要求时修改，同样禁止写入服务状态。
+   - 例外（框架配置，非状态）：根目录的 `CLAUDE.md`（只做导入）和 `AGENTS.md`（Codex 入口）属于本框架的组成部分，只在我明确要求时修改，同样禁止写入服务状态。
 6. **运维偏好**：
-   - **代码审查规则**（仅 Claude Code）：精准定位、debug 排查、Bug 修复分析、功能测试、回归检验和代码审查等任务，优先通过 codex 处理。任务书以「【任务书】」开头，模板参考 skill `codex-delegate`，未安装时提醒我。
+   - **代码审查规则**：精准定位、debug 排查、Bug 修复分析、功能测试、回归检验和代码审查等任务，优先通过 codex 处理。任务书以「【任务书】」开头，模板参考 skill `codex-delegate`，未安装时提醒我。
    - **沙箱分级**：
      - 常规定位：`sandbox="read-only"`，codex 仅分析并给出 unified diff patch，严禁实际改动代码。
      - debug 与功能验证：`sandbox="workspace-write"`，允许 codex 运行测试、创建临时验证脚本并持续排查，但未经明确授权不得修改正式业务代码。
@@ -27,7 +27,7 @@
    - **审查收敛**：以首次审查提出的问题是否已解决为标准；复审重点核验这些问题的修复情况，不无边界地扩展范围；发现与本次修改直接相关的新严重问题，单独明确说明。
    - **调用规范**：每次调用 codex 须带 `cd` 与 `PROMPT`；调用后先检查 `success` 字段，并保存返回的 `SESSION_ID` 以便多轮处理。
    - **并行**：工作量大时可用 subagent 并行（继承主代理模型），同样遵守本条。
-   - **高危命令**：`rm`、`systemctl restart/stop`、`docker compose down`、数据库操作等，先展示完整命令，经我确认后再执行（其中 `rm` 和数据库操作已在 `.claude/settings.json` 设 ask 规则兜底）。
+   - **高危命令**：`rm`、`systemctl restart/stop`、`docker compose down`、数据库操作等，先展示完整命令，经我确认后再执行。
 7. **联网检索（mcp-grok）**：
    - `mcp-grok`（工具名 `mcp__mcp-grok__web_search`、`web_fetch`、`web_map` 等）是联网检索工具，用于获取和核实最新信息、实时动态及外部知识。
    - 任务涉及时效性信息、陌生知识、存在争议或无法确认的事实，以及排查过程中需要检索外部资料时，优先调用 mcp-grok，不得仅依赖模型自身知识猜测。

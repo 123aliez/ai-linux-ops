@@ -25,7 +25,6 @@ ai-linux-ops/
 ├── AGENTS.md              # Codex 入口（含执行者模式）
 ├── RULES_GLOBAL.md        # 行为规则（7 条）
 ├── DESC_DIR.md            # 目录管理规范（7 条）
-├── .claude/settings.json  # 权限：高危命令强制确认
 ├── .gitignore             # 排除下面的本机状态文件
 ├── _template/
 │   ├── SERVICE.md         # 服务文档模板
@@ -65,7 +64,7 @@ Gemini CLI 可以复制 `AGENTS.md` 并重命名为 `GEMINI.md`。
 | 3 | 上下文解析优先 | 优先读取用户提供的文档，不用预训练数据 |
 | 4 | 状态确认握手 | 每次新会话用一句话确认已加载框架 |
 | 5 | 状态存储唯一性 | 状态只写入本框架的文件 |
-| 6 | 运维偏好 | Codex 负责定位、排查、测试、回归和代码审查，Bug 修复全程参与；高危命令确认（ask 规则兜底） |
+| 6 | 运维偏好 | Codex 负责定位、排查、测试、回归和代码审查，Bug 修复全程参与；高危命令先确认 |
 | 7 | 联网检索 | 时效性信息和外部事实优先用 mcp-grok 检索，并与本机状态交叉验证 |
 
 ### 服务器环境：`DESC_ENV.md`
@@ -216,7 +215,6 @@ ai-linux-ops/
 ├── AGENTS.md              # Codex entry (with executor mode)
 ├── RULES_GLOBAL.md        # Behavior rules (7 rules)
 ├── DESC_DIR.md            # Directory management rules (7 rules)
-├── .claude/settings.json  # Permissions: dangerous commands always ask
 ├── .gitignore             # Excludes the local state files below
 ├── _template/
 │   ├── SERVICE.md         # Service document template
@@ -256,7 +254,7 @@ Defines 7 behavioral rules for AI assistants:
 | 3 | Context Priority | Parse user-provided documents first, don't use training data |
 | 4 | Handshake Protocol | One-sentence confirmation that the framework is loaded |
 | 5 | Single Source of Truth | State goes only into framework files |
-| 6 | Ops Preferences | Codex handles localization, debugging, testing, regression checks and code review, and takes part end to end in bug fixes; dangerous command review (backed by ask rules) |
+| 6 | Ops Preferences | Codex handles localization, debugging, testing, regression checks and code review, and takes part end to end in bug fixes; dangerous commands need confirmation first |
 | 7 | Web Search | Use mcp-grok first for time-sensitive or external facts, cross-checked against the server's actual state |
 
 ### Server Environment: `DESC_ENV.md`
