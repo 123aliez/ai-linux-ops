@@ -14,7 +14,7 @@
 - **操作边界红线**：AI 严格遵守"先确认再操作"，高危命令必须审阅
 - **工具无关**：纯 Markdown 文件，Claude Code / Codex / Gemini / Cursor 通用
 - **跨会话持久**：所有状态写入文件，不依赖 AI 的记忆系统
-- **Codex 执行与审查**：精准定位、debug 排查、Bug 修复分析、功能测试、回归检验和代码审查优先交给 Codex；Bug 修复由 Codex 全程参与（定位根因 → 提供 patch → 验证修改 → 回归检查），业务代码由主模型根据 patch 修改；测试通过后才进入代码审查
+- **Codex 执行与审查**：精准定位、debug 排查、Bug 修复分析、功能测试、回归检验和代码审查优先交给 Codex；Bug 修复由 Codex 全程参与（定位根因 → 提供 patch → 验证修改 → 回归检查），业务代码和服务配置文件由主模型根据 patch 修改；测试通过后才进入代码审查
 - **只有框架入库**：真实服务器信息和服务文档只保存在本机（`.gitignore` 排除），仓库保持为通用模板
 
 ## 目录结构
@@ -204,7 +204,7 @@ If you manage a Linux server running dozens of public-facing services (API proxi
 - **Operational Boundaries**: AI strictly follows "confirm before act" — dangerous commands require human review
 - **Tool-Agnostic**: Pure Markdown files, works with Claude Code / Codex / Gemini / Cursor
 - **Cross-Session Persistence**: All state is stored in files, independent of AI memory systems
-- **Codex as Executor and Reviewer**: precise localization, debugging, bug-fix analysis, functional testing, regression checks and code review go to Codex first. For bug fixes Codex takes part end to end (root cause → patch → verify → regression check); the main model applies the patch to business code, and code review starts only after tests pass
+- **Codex as Executor and Reviewer**: precise localization, debugging, bug-fix analysis, functional testing, regression checks and code review go to Codex first. For bug fixes Codex takes part end to end (root cause → patch → verify → regression check); the main model applies the patch to business code and service config files, and code review starts only after tests pass
 - **Only the Framework Is Committed**: Real server details and service docs stay on the machine (excluded by `.gitignore`); the repository stays a generic template
 
 ## Directory Structure
