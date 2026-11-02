@@ -14,7 +14,7 @@
 - **操作边界红线**：AI 严格遵守"先确认再操作"，高危命令必须审阅
 - **工具无关**：纯 Markdown 文件，Claude Code / Codex / Gemini / Cursor 通用
 - **跨会话持久**：所有状态写入文件，不依赖 AI 的记忆系统
-- **Codex 只读协作**：主代理负责规划、调度和执行；排障信息收集交给只读的 Codex，变更方案和变更结果由新开的 Codex 会话独立审查
+- **Codex 执行与审查**：精准定位、debug 排查、Bug 修复分析、功能测试、回归检验和代码审查优先交给 Codex；Bug 修复由 Codex 全程参与（定位根因 → 提供 patch → 验证修改 → 回归检查），业务代码由主模型根据 patch 修改
 - **只有框架入库**：真实服务器信息和服务文档只保存在本机（`.gitignore` 排除），仓库保持为通用模板
 
 ## 目录结构
@@ -22,7 +22,7 @@
 ```
 ai-linux-ops/
 ├── CLAUDE.md              # Claude Code 入口（@ 导入规则文件）
-├── AGENTS.md              # Codex 入口（含只读助手模式）
+├── AGENTS.md              # Codex 入口（含执行者模式）
 ├── RULES_GLOBAL.md        # 行为规则（7 条）
 ├── DESC_DIR.md            # 目录管理规范（7 条）
 ├── .claude/settings.json  # 权限：高危命令强制确认
@@ -44,7 +44,7 @@ ai-linux-ops/
 
 ### 入口文件：`CLAUDE.md`
 
-AI 助手启动时自动读取的入口。`CLAUDE.md` 用 `@` 导入四个核心文件；`AGENTS.md` 指示 Codex 按顺序读取它们，被 Claude 以「【任务书】」调用时则进入只读助手模式。不同 AI 工具对应不同的入口文件名：
+AI 助手启动时自动读取的入口。`CLAUDE.md` 用 `@` 导入四个核心文件；`AGENTS.md` 指示 Codex 按顺序读取它们，被 Claude 以「【任务书】」调用时则进入执行者模式。不同 AI 工具对应不同的入口文件名：
 
 | AI 工具 | 入口文件 |
 |---------|---------|
@@ -65,7 +65,7 @@ Gemini CLI 可以复制 `AGENTS.md` 并重命名为 `GEMINI.md`。
 | 3 | 上下文解析优先 | 优先读取用户提供的文档，不用预训练数据 |
 | 4 | 状态确认握手 | 每次新会话用一句话确认已加载框架 |
 | 5 | 状态存储唯一性 | 状态只写入本框架的文件 |
-| 6 | 运维偏好 | Codex 只读信息收集与独立审查（简单改动可跳过）、高危命令确认（ask 规则强制）、变更后同步 |
+| 6 | 运维偏好 | Codex 负责定位、排查、测试、回归和代码审查，Bug 修复全程参与；高危命令确认（ask 规则兜底） |
 | 7 | 联网检索 | 时效性信息和外部事实优先用 mcp-grok 检索，并与本机状态交叉验证 |
 
 ### 服务器环境：`DESC_ENV.md`
@@ -205,7 +205,7 @@ If you manage a Linux server running dozens of public-facing services (API proxi
 - **Operational Boundaries**: AI strictly follows "confirm before act" — dangerous commands require human review
 - **Tool-Agnostic**: Pure Markdown files, works with Claude Code / Codex / Gemini / Cursor
 - **Cross-Session Persistence**: All state is stored in files, independent of AI memory systems
-- **Read-only Codex Collaboration**: The main agent plans, coordinates and executes. Read-only Codex sessions gather troubleshooting information, and fresh Codex sessions independently review change plans and results
+- **Codex as Executor and Reviewer**: precise localization, debugging, bug-fix analysis, functional testing, regression checks and code review go to Codex first. For bug fixes Codex takes part end to end (root cause → patch → verify → regression check); the main model applies the patch to business code
 - **Only the Framework Is Committed**: Real server details and service docs stay on the machine (excluded by `.gitignore`); the repository stays a generic template
 
 ## Directory Structure
@@ -213,7 +213,7 @@ If you manage a Linux server running dozens of public-facing services (API proxi
 ```
 ai-linux-ops/
 ├── CLAUDE.md              # Claude Code entry (@-imports the rule files)
-├── AGENTS.md              # Codex entry (with read-only assistant mode)
+├── AGENTS.md              # Codex entry (with executor mode)
 ├── RULES_GLOBAL.md        # Behavior rules (7 rules)
 ├── DESC_DIR.md            # Directory management rules (7 rules)
 ├── .claude/settings.json  # Permissions: dangerous commands always ask
@@ -235,7 +235,7 @@ ai-linux-ops/
 
 ### Entry File: `CLAUDE.md`
 
-The entry point auto-loaded by AI assistants. `CLAUDE.md` `@`-imports the four core files. `AGENTS.md` tells Codex to read them in order, and switches it to read-only assistant mode when Claude calls it with a prompt starting with 「【任务书】」. Different AI tools use different filenames:
+The entry point auto-loaded by AI assistants. `CLAUDE.md` `@`-imports the four core files. `AGENTS.md` tells Codex to read them in order, and switches it to executor mode when Claude calls it with a prompt starting with 「【任务书】」. Different AI tools use different filenames:
 
 | AI Tool | Entry File |
 |---------|-----------|
@@ -256,7 +256,7 @@ Defines 7 behavioral rules for AI assistants:
 | 3 | Context Priority | Parse user-provided documents first, don't use training data |
 | 4 | Handshake Protocol | One-sentence confirmation that the framework is loaded |
 | 5 | Single Source of Truth | State goes only into framework files |
-| 6 | Ops Preferences | Read-only Codex info gathering and independent review (skippable for simple changes), dangerous command review (enforced by ask rules), post-change sync |
+| 6 | Ops Preferences | Codex handles localization, debugging, testing, regression checks and code review, and takes part end to end in bug fixes; dangerous command review (backed by ask rules) |
 | 7 | Web Search | Use mcp-grok first for time-sensitive or external facts, cross-checked against the server's actual state |
 
 ### Server Environment: `DESC_ENV.md`
